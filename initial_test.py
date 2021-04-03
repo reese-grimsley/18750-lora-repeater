@@ -40,7 +40,7 @@ def test_rx(frequency):
 
 def main():
     print('main')
-    test_rx(930.0)
+    test_rx(915.0)
 
 if __name__ == "__main__":
     main()
