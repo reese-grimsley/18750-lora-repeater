@@ -19,11 +19,11 @@ def test_rx(frequency):
     print('config created')
     wait = 30
 
-    lora.rxc()
-    print('LoRa set to receive, entering loop')
 
-    while(True):
-        print(f'Waiting for {wait} seconds')
+    lora.rxc()
+
+    while True:
+        print(f'LoRa set to receive; waiting for {wait}s')
 
         lora.rx_get(wait)
         while lora.nb_downlinks > 0:
@@ -34,7 +34,6 @@ def test_rx(frequency):
             print(type(data))
             print('RSSI: {}, SNR: {}'.format(message['rssi'], message['snr']))
 
-        lora.
 
 
 
