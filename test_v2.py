@@ -33,7 +33,7 @@ for x in resp:
 
 
 print('try to set self as receiver')
-lora.set_confg('lorap2p:transfer_mode:1')
+lora.set_config('lorap2p:transfer_mode:1')
 resp = lora.get_info()
 # print(resp)
 for x in resp:
