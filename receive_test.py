@@ -1,15 +1,12 @@
 ###There's something wrong with the normal rak811 library for the recently produced set of parts we purchased... supposedly this is an option
 
 import time
-from rak811v2 import Rak811v2
+import rak811v2
+Rak811v2 = rak811v2.Rak811v2
 
 print('init')
 
 lora = Rak811v2()
-print(lora._serial)
-print(lora._serial._serial)
-print(lora._serial._serial.port)
-lora._serial._logger.setLevel(0)
 
 print('Reset radio')
 lora.hard_reset()
