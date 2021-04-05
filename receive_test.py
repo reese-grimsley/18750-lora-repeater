@@ -14,7 +14,6 @@ lora.hard_reset()
 print('Get version')
 v = lora.version
 print(v[0])
-print(v[1])
 
 
 print('\nSet configuration modes for LoRa p2p')
@@ -52,7 +51,7 @@ while True:
             for x in event:
                 print('\t',x)
     
-    except Rak811v2.serial.Rak811v2TimeoutError as e:
+    except rak811v2.serial.Rak811v2TimeoutError as e:
         print('timeout on RX')
         print(e)
 
