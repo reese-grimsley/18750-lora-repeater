@@ -13,6 +13,9 @@ lora._serial._logger.setLevel(0)
 
 lora.hard_reset()
 
+lora._serial.send_command('help')
+
+
 resp = lora.get_info()
 print(resp)
 for x in resp:
