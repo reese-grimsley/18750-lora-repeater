@@ -11,11 +11,13 @@ print(lora._serial._serial)
 print(lora._serial._serial.port)
 lora._serial._logger.setLevel(0)
 
+print('Reset radio')
 lora.hard_reset()
 
-
-print(lora.version())
-
+print('Get version')
+v = lora.version())
+print(v[0])
+print(v[1])
 
 
 print('\nSet configuration modes for LoRa p2p')
