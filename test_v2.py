@@ -9,6 +9,7 @@ lora = Rak811v2()
 print(lora._serial)
 print(lora._serial._serial)
 print(lora._serial._serial.port)
+lora._serial._logger.setLevel(0)
 
 lora.hard_reset()
 
