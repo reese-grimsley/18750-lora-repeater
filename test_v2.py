@@ -15,7 +15,7 @@ print('Reset radio')
 lora.hard_reset()
 
 print('Get version')
-v = lora.version())
+v = lora.version()
 print(v[0])
 print(v[1])
 
