@@ -1,6 +1,6 @@
 ###There's something wrong with the normal rak811 library for the recently produced set of parts we purchased... supposedly this is an option
 
-
+import time
 from rak811v2 import Rak811v2
 
 print('init')
@@ -20,3 +20,42 @@ resp = lora.get_info()
 print(resp)
 for x in resp:
     print('\t',x)
+
+
+time.sleep(1)
+print('try to set configuration modes for LoRa p2p')
+
+lora.set_config('lora:work_mode:1')
+resp = lora.get_info()
+print(resp)
+for x in resp:
+    print('\t',x)
+
+
+print('try to set self as receiver')
+lora.set_confg('lorap2p:transfer_mode:1')
+resp = lora.get_info()
+print(resp)
+for x in resp:
+    print('\t',x)
+
+
+
+lora.set_confg('lorap2p:915000000:10:0:1:8:16')
+resp = lora.get_info()
+print(resp)
+for x in resp:
+    print('\t',x)
+
+
+print('print recv events')
+i=0
+while True:
+    print('loop iter %d' % i)
+    x = lora.get_event(timeout=5)
+    y = lora.get_response(timeout=1)
+
+    print(x)
+    print(y)
+
+    i+=1
