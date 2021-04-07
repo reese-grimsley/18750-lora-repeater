@@ -55,12 +55,12 @@ while True:
             if 'at+recv' in event:
                 #we received a message. Let's decode. 
                 ## e.g. at+recv=-72,7,26:48656C6C6F20576F726C6421206D736720636E743A2032310D0A; -72 is RSSI, 7 is SNR, and 26 is #bytes
-                header = event.split['='][-1].split[':'][0].split[',']
+                header = event.split('=')[-1].split(':')[0].split(',')
                 rssi = header[0]
                 snr = header[1]
                 num_bytes = header[2]
 
-                data = event.split[':'][-1] #get what's to th e righ o the parameters
+                data = event.split(':')[-1] #get what's to th e righ o the parameters
                 print(f'Data is supposed to be {num_bytes} and we have {len(data)} hex characters')
 
                 decoded_data = bytes.fromhex(data).decode('ASCII')
