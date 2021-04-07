@@ -57,7 +57,7 @@ while True:
     str_to_send = "Hello World! msg cnt: %d\r\n" % i
     print('Sending "%s"' % str_to_send)
     lora.send_lorap2p(str_to_send)
-
+    print('Sent')
 
     # resp = lora.get_response(timeout=1)
     # for x in resp:
