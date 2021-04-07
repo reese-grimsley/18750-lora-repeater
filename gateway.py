@@ -7,7 +7,7 @@ import messages
 Rak811v2 = rak811v2.Rak811v2
 
 ## Device address
-dev_addr = 0x01 ## Client
+dev_addr = 0x01 ## Gateway
 
 
 ### Setting configs
