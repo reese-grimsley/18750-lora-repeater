@@ -45,22 +45,11 @@ while True:
     print()
     print('loop iter %d' % i)
     print()
-    # try: 
-    #     events = lora.get_events(timeout=5)
-    #     for event in events:
-    #         for x in event:
-    #             print('\t',x)
     
-    # except rak811v2.serial.Rak811v2TimeoutError as e:
-    #     print('timeout on RX')
-    #     print(e)
     str_to_send = "Hello World! msg cnt: %d\r\n" % i
     print('Sending "%s"' % str_to_send)
     lora.send_lorap2p(str_to_send)
     print('Sent')
 
-    # resp = lora.get_response(timeout=1)
-    # for x in resp:
-    #     print('\t',x)
     time.sleep(15)
     i+=1
