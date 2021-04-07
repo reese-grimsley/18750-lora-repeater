@@ -1,4 +1,3 @@
-
 MAX_PACKET_SIZE_BYTES = 64
 
 class TXMessage():
