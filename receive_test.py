@@ -50,8 +50,8 @@ while True:
         for event in events:
             for x in event:
                 print('\t',x)
-            print(x)
-            print(type(x))
+            print(event)
+            print(type(event))
     
     except rak811v2.serial.Rak811v2TimeoutError as e:
         print('timeout on RX')
