@@ -48,10 +48,7 @@ while True:
     try: 
         events = lora.get_events(timeout=5)
         for event in events:
-            for x in event:
-                print('\t',x)
             print(event)
-            print(type(event))
             if 'at+recv' in event:
                 #we received a message. Let's decode. 
                 ## e.g. at+recv=-72,7,26:48656C6C6F20576F726C6421206D736720636E743A2032310D0A; -72 is RSSI, 7 is SNR, and 26 is #bytes
@@ -66,15 +63,8 @@ while True:
                 decoded_data = bytes.fromhex(data).decode('ASCII')
                 print('Received: %s' % decoded_data)
 
-
-    
     except rak811v2.serial.Rak811v2TimeoutError as e:
         print('timeout on RX')
-        print(e)
-
-
-    # resp = lora.get_response(timeout=1)
-    # for x in resp:
-    #     print('\t',x)
+        # print(e)
 
     i+=1
