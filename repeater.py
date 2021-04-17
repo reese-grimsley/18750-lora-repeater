@@ -80,13 +80,6 @@ while True:
                 else:
 
                     # Set in Tx mode
-                    print('\nSet configuration modes for LoRa p2p')
-                    lora.set_config('lora:work_mode:1')
-                    resp = lora.get_info()
-                    # print(resp)
-                    for x in resp:
-                        print('\t',x)
-
 
                     print('\nSet self as sender mode')
                     lora.set_config('lorap2p:transfer_mode:2')
@@ -95,42 +88,21 @@ while True:
                     for x in resp:
                         print('\t',x)
 
-
-                    print('\nSet P2P parameters')
-                    lora.set_config('lorap2p:915000000:10:0:1:8:16')
-                    resp = lora.get_info()
-                    for x in resp:
-                        print('\t',x)
-
                     # Create message
                     decoded_data = message.get_payload()
                     message_re = messages.TXMessage(message.get_frame_counter(), message.get_addr(), decoded_data)
                     tx_bytes = message_re.get_bytes()   
                     lora.send_lorap2p(tx_bytes)
-                    print('Sent')  
+                    print('Repeated')  
 
                     # Set in Rx mode
-                    print('\nSet configuration modes for LoRa p2p')
-                    lora.set_config('lora:work_mode:1')
-                    resp = lora.get_info()
-                    # print(resp)
-                    for x in resp:
-                        print('\t',x)
-
 
                     print('\nSet self as receiver mode')
                     lora.set_config('lorap2p:transfer_mode:1')
                     resp = lora.get_info()
                     # print(resp)
                     for x in resp:
-                        print('\t',x)
-
-
-                    print('\nSet P2P parameters')
-                    lora.set_config('lorap2p:915000000:10:0:1:8:16')
-                    resp = lora.get_info()
-                    for x in resp:
-                        print('\t',x)    
+                        print('\t',x) 
 
                     time.sleep(2)          
 
