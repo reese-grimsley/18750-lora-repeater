@@ -93,7 +93,7 @@ while True:
                     message_re = messages.TXMessage(message.get_frame_counter(), message.get_addr(), decoded_data)
                     tx_bytes = message_re.get_bytes()   
                     lora.send_lorap2p(tx_bytes)
-                    print('Repeated %s', decoded_data)  
+                    print('Repeated %s' % decoded_data)  
 
                     # Set in Rx mode
 
