@@ -7,7 +7,7 @@ Rak811v2 = rak811v2.Rak811v2
 
 
 ## Device address
-dev_addr = 0x03 ## Client
+dev_addr = 0x02 ## Client
 
 ### Destination address
 dest_addr = 0x01 ## Gateway
@@ -68,5 +68,5 @@ while True:
     lora.send_lorap2p(tx_bytes)
     print('Sent')
 
-    time.sleep(15)
+    time.sleep(30)
     i+=1
