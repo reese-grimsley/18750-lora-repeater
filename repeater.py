@@ -51,7 +51,6 @@ i=0
 while True:
     print()
     print('loop iter %d' % i)
-    print()
     try: 
         events = lora.get_events(timeout=5)
         for event in events:

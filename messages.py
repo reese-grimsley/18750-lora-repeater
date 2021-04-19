@@ -1,3 +1,5 @@
+import struct
+
 MAX_PACKET_SIZE_BYTES = 64
 NUM_HEADER_BYTES = 10
 
@@ -52,9 +54,13 @@ class RXMessage():
         self.dest_addr = int.from_bytes(msg_bytes[2:6], byteorder='big')
         self.sender_addr = int.from_bytes(msg_bytes[6:10], byteorder='big')
         self.payload = msg_bytes[10:].decode('ascii')
+        self.payload_bytes = msg_bytes[10:]
 
     def get_payload(self):
         return self.payload
+    
+    def get_payload_bytes(self):
+        return self.payload_bytes
 
     def get_dest_addr(self):
         return self.dest_addr
@@ -64,3 +70,20 @@ class RXMessage():
 
     def get_frame_counter(self):
         return self.frame_count
+
+def float_to_bytes(f):
+    return struct.pack('f', f)
+
+def double_to_bytes(d):
+    return struct.pack('d', d)
+
+def bytes_to_float(b):
+    assert len(b) == 4, 'Incorrect length for a float; should be 4 byte exactly'
+    return struct.unpack('f', b)[0]
+
+def bytes_to_double(b):
+    assert len(b) == 8, 'Incorrect length for a double; should be 8 bytes exactly'
+    return struct.unpack('d', b)[0]
+
+def str_to_bytes(str):
+    return (bytes)(str, 'utf-8')

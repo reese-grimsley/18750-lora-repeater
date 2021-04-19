@@ -58,15 +58,19 @@ while True:
     print('loop iter %d' % i)
     print()
     
-    str_to_send = "Hello World! msg cnt: %d\r\n" % i
-    print('Sending "%s"' % str_to_send)
+    # str_to_send = "Hello World! msg cnt: %d, time: " % i
+    # print('Sending "%s"' % str_to_send)
+    # bytes_to_send = messages.str_to_bytes(str_to_send)
+    temperature=73.5 #FIXME
+    humidity=50.0 #FIXME
+    bytes_to_send = messages.double_to_bytes(temperature)
+    bytes_to_send += messages.double_to_bytes(humidity)
+    bytes_to_send += messages.double_to_bytes(time.time())
+    # bytes_to_send += messages.str_to_bytes('\r\n')
 
-    ##Insert temeperature sensing code
-    ##take timestamp time.time() or datetime (former is sufficient, and produces a double; units are seconds)
-    ##Configure message to send as either a string or a sequence of 'bytes'; bytes will be more compact 
-    ##Log to CSV, with timestamp, frame_count, dest_addr, this address, and the payload bytes
 
-    message = messages.TXMessage(i, dest_addr, dev_addr, str_to_send)
+    # message = messages.TXMessage(i, dest_addr, dev_addr, str_to_send)
+    message = messages.TXMessage(i, dest_addr, dev_addr, bytes_to_send)
     tx_bytes = message.get_bytes()
 
     # lora.send_lorap2p(str_to_send)
