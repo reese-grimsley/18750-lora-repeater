@@ -54,7 +54,7 @@ for x in resp:
     print('\t',x)
 
 DHT_SENSOR = Adafruit_DHT.DHT22
-DHT_PIN = 18
+DHT_PIN = 27
 #### End of configs
 
 ### Messages to transmit
@@ -69,6 +69,8 @@ while True:
     # print('Sending "%s"' % str_to_send)
     # bytes_to_send = messages.str_to_bytes(str_to_send)
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    print(temperature)
+    print(humidity)
     print('Temperature and Humidity: \t %f, \t %f' % (temperature, humidity))
     timestamp_send = time.time()
     bytes_to_send = messages.double_to_bytes(temperature)
