@@ -13,7 +13,7 @@ if not os.path.isfile('results_repeater.csv'):
         f.write(headers)
 
 ## Device address
-dev_addr = 0x03 ## Repeater
+dev_addr = 0x02 ## Repeater
 
 
 ### Setting configs
@@ -115,7 +115,7 @@ while True:
 
                     # Create message
                     received_bytes = message.get_payload_bytes()
-                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_dest_addr(), message.get_sender_addr(), received_bytes)
+                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_dest_addr(), dev_addr, received_bytes)
                     tx_bytes = message_re.get_bytes()   
                     lora.send_lorap2p(tx_bytes)
                     if message.get_payload() == "INVALID ASCII; USE payload_bytes INSTEAD":
