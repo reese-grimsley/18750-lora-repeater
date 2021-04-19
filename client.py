@@ -9,9 +9,8 @@ Rak811v2 = rak811v2.Rak811v2
 
 if not os.path.isfile('results.csv'):
     with open('results.csv', 'w') as f:
-        headers = ['TIMESTAMP SEND', 'SENDER ADDRESS', 'DESTINATION ADDRESS', 'FRAME COUNT', 'TEMPERATURE', 'HUMIDITY', 'RAW MESSAGE']
-        writer = csv.writer(f)
-        writer.writerow(list(itertools.chain(*headers)))
+        line = 'TIMESTAMP SEND, SENDER ADDRESS, DESTINATION ADDRESS, FRAME COUNT,TEMPERATURE, HUMIDITY, RAW MESSAGE']
+        f.write(line)
 
 ## Device address
 dev_addr = 0x02 ## Client
