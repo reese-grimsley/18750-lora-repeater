@@ -83,6 +83,7 @@ while True:
 
                     # Set in Tx mode
                     ##What if we received 2 messages in this timeframe? Perhaps we should keep a list of the messages we received, and then send them all after we're doing processing received events
+                    print(f'Repeating message from sender {message.get_sender_addr()} to {message.get_dest_addr()}')
 
                     print('\nSet self as sender mode')
                     lora.set_config('lorap2p:transfer_mode:2')
