@@ -7,8 +7,8 @@ Rak811v2 = rak811v2.Rak811v2
 
 
 
-if not os.path.isfile('results.csv'):
-    with open('results.csv', 'w') as f:
+if not os.path.isfile('results_client.csv'):
+    with open('results_client.csv', 'w') as f:
         line = 'TIMESTAMP_SEND,SENDER_ADDRESS,DESTINATION_ADDRESS,FRAME_COUNT,TEMPERATURE,HUMIDITY,RAW_MESSAGE\r\n'
         f.write(line)
 
@@ -89,7 +89,7 @@ while True:
     lora.send_lorap2p(tx_bytes)
                     
     row = [timestamp_send, dev_addr, dest_addr, message.frame_count, temperature, humidity, message.payload_bytes]                
-    with open('results.csv','a') as f:
+    with open('results_client.csv','a') as f:
         writer = csv.writer(f)
         writer.writerow(row)
 

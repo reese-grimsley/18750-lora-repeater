@@ -8,8 +8,8 @@ Rak811v2 = rak811v2.Rak811v2
 ## Device address
 dev_addr = 0x01 ## Gateway
 
-if not os.path.isfile('results.csv'):
-    with open('results.csv', 'w') as f:
+if not os.path.isfile('results_gateway.csv'):
+    with open('results_gateway.csv', 'w') as f:
         headers = 'TIMESTAMP_SEND,TIMESTAMP_RECEIVE,RSSI,SNR,SENDER_ADDRESS,DESTINATION_ADDRESS,FRAME_COUNT,TEMPERATURE,HUMIDITY,RAW_MESSAGE\r\n'
         f.write(headers)
 
@@ -95,7 +95,7 @@ while True:
                         timediff = now - timestamp
                         row = [timestamp, now, rssi, snr, message.get_sender_addr(),message.get_dest_addr(), message.get_frame_counter(), temperature, humidity, payload_bytes]
 
-                        with open('results.csv', 'a') as f:
+                        with open('results_gateway.csv', 'a') as f:
                             writer = csv.writer(f)
                             writer.writerow(row)
 
