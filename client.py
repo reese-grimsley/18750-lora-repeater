@@ -9,7 +9,7 @@ Rak811v2 = rak811v2.Rak811v2
 
 if not os.path.isfile('results.csv'):
     with open('results.csv', 'w') as f:
-        line = 'TIMESTAMP SEND, SENDER ADDRESS, DESTINATION ADDRESS, FRAME COUNT,TEMPERATURE, HUMIDITY, RAW MESSAGE'
+        line = 'TIMESTAMP SEND, SENDER ADDRESS, DESTINATION ADDRESS, FRAME COUNT,TEMPERATURE, HUMIDITY, RAW MESSAGE\r\n'
         f.write(line)
 
 ## Device address
