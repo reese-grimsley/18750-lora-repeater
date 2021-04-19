@@ -1,8 +1,9 @@
 MAX_PACKET_SIZE_BYTES = 64
+NUM_HEADER_BYTES = 10
 
 class TXMessage():
 
-    def  __init__(self, frame_count: int, client_addr, payload):
+    def  __init__(self, frame_count: int, dest_addr:int, sender_addr, payload):
         '''
         A message to send with a few minor features in the header, namely a frame-count and a sender address in addition to the payload. This class encodes that into a stream of bytes for the PHY layer
 
@@ -11,12 +12,13 @@ class TXMessage():
         payload: str or bytes, contains the message to send
         '''
 
-        assert len(payload) < MAX_PACKET_SIZE_BYTES, f'Message is too large to send at {len(payload)} bytes'
+        assert len(payload) < MAX_PACKET_SIZE_BYTES-NUM_HEADER_BYTES, f'Message is too large to send at {len(payload)} bytes'
         assert frame_count > 0, 'Frame count is negative'
         assert frame_count & 0xffff == frame_count, 'Frame count is too high; it should be within 2 bytes'
 
         self.frame_count = frame_count
-        self.client_addr = client_addr
+        self.dest_addr = dest_addr
+        self.sender_addr = sender_addr
         self.payload = payload
         if isinstance(payload, bytes):
             self.payload_bytes = payload
@@ -28,7 +30,7 @@ class TXMessage():
             raise TypeError('payload should be a set of bytes or a string to send')
 
         # print(self.payload_bytes)
-        self.bytes = int.to_bytes(self.frame_count, 2, byteorder='big', signed=False) + int.to_bytes(self.client_addr, 4, byteorder='big', signed=False) +  self.payload_bytes 
+        self.bytes = int.to_bytes(self.frame_count, 2, byteorder='big', signed=False) + int.to_bytes(self.dest_addr, 4, byteorder='big', signed=False) + int.to_bytes(self.sender_addr, 4, byteorder='big', signed=False) +  self.payload_bytes 
 
         ##bytes.hex(tx.get_bytes()) == hexlify(tx.bytes).decode('ascii')
 
@@ -47,14 +49,18 @@ class RXMessage():
         msg_bytes = bytes.fromhex(self.msg_str)
 
         self.frame_count  = int.from_bytes(msg_bytes[0:2], byteorder='big')
-        self.client_addr = int.from_bytes(msg_bytes[2:6], byteorder='big')
-        self.payload = msg_bytes[6:].decode('ascii')
+        self.dest_addr = int.from_bytes(msg_bytes[2:6], byteorder='big')
+        self.sender_addr = int.from_bytes(msg_bytes[6:10], byteorder='big')
+        self.payload = msg_bytes[10:].decode('ascii')
 
     def get_payload(self):
         return self.payload
 
-    def get_addr(self):
-        return self.client_addr
+    def get_dest_addr(self):
+        return self.dest_addr
+
+    def get_sender_addr(self):
+        return self.sender_addr
 
     def get_frame_counter(self):
         return self.frame_count

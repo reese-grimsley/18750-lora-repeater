@@ -66,7 +66,6 @@ while True:
                 num_bytes = header[2]
 
                 data = event.split(':')[-1] #get what's to th e righ o the parameters
-                print(f'Data is supposed to be {num_bytes} and we have {len(data)} hex characters')
 
                 # decoded_data = bytes.fromhex(data).decode('ASCII')
                 # print('Received: %s' % decoded_data)
@@ -75,9 +74,12 @@ while True:
                 message = messages.RXMessage(data)
 
                 # only if dev address and dest address in packet matches, else discard
-                if message.get_addr() == dev_addr:
+                if message.get_dest_addr() == dev_addr:
                     decoded_data = message.get_payload()
                     print('Received: %s' % decoded_data)
+
+                    ##Log to CSV, with timestamp, frame_count, dest_addr, client_address, RSSI, SNR, and the payload bytes
+                    ## Are we going to detect repeat packets (i.e those received by repeater as well, such that a frame is received >1 times)
 
 
     except rak811v2.serial.Rak811v2TimeoutError as e:

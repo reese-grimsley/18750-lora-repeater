@@ -65,21 +65,24 @@ while True:
                 num_bytes = header[2]
 
                 data = event.split(':')[-1] #get what's to th e righ o the parameters
-                print(f'Data is supposed to be {num_bytes} and we have {len(data)} hex characters')
 
                 # decoded_data = bytes.fromhex(data).decode('ASCII')
                 # print('Received: %s' % decoded_data)
 
 
                 message = messages.RXMessage(data)
+                ##Log to CSV, with timestamp, frame_count, dest_addr, sender_address, RSSI, SNR, and the payload bytes
+
 
                 # only if dev address and dest address in packet matches, else retransmit
-                if message.get_addr() == dev_addr:
+                if message.get_dest_addr() == dev_addr:
                     decoded_data = message.get_payload()
                     print('Received: %s' % decoded_data)
+
                 else:
 
                     # Set in Tx mode
+                    ##What if we received 2 messages in this timeframe? Perhaps we should keep a list of the messages we received, and then send them all after we're doing processing received events
 
                     print('\nSet self as sender mode')
                     lora.set_config('lorap2p:transfer_mode:2')
@@ -90,7 +93,7 @@ while True:
 
                     # Create message
                     decoded_data = message.get_payload()
-                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_addr(), decoded_data)
+                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_dest_addr(), message.get_sender_addr(), decoded_data)
                     tx_bytes = message_re.get_bytes()   
                     lora.send_lorap2p(tx_bytes)
                     print('Repeated %s' % decoded_data)  
