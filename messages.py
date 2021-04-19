@@ -53,11 +53,17 @@ class RXMessage():
         self.frame_count  = int.from_bytes(msg_bytes[0:2], byteorder='big')
         self.dest_addr = int.from_bytes(msg_bytes[2:6], byteorder='big')
         self.sender_addr = int.from_bytes(msg_bytes[6:10], byteorder='big')
-        self.payload = msg_bytes[10:].decode('ascii')
         self.payload_bytes = msg_bytes[10:]
+        try:
+            self.payload_str = msg_bytes[10:].decode('ascii')
+        except UnicodeDecodeError as e: 
+            print(e)
+            print('invalid ASCII bytes; use payload bytes instead')
+            self.payload_str = "INVALID ASCII"
+
 
     def get_payload(self):
-        return self.payload
+        return self.payload_str
     
     def get_payload_bytes(self):
         return self.payload_bytes
