@@ -9,7 +9,7 @@ Rak811v2 = rak811v2.Rak811v2
 
 if not os.path.isfile('results.csv'):
     with open('results.csv', 'w') as f:
-        line = 'TIMESTAMP SEND, SENDER ADDRESS, DESTINATION ADDRESS, FRAME COUNT,TEMPERATURE, HUMIDITY, RAW MESSAGE']
+        line = 'TIMESTAMP SEND, SENDER ADDRESS, DESTINATION ADDRESS, FRAME COUNT,TEMPERATURE, HUMIDITY, RAW MESSAGE'
         f.write(line)
 
 ## Device address
@@ -69,6 +69,7 @@ while True:
     # print('Sending "%s"' % str_to_send)
     # bytes_to_send = messages.str_to_bytes(str_to_send)
     humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    print('Temperature and Humidity: \t %f, \t %f' % (temperature, humidity))
     timestamp_send = time.time()
     bytes_to_send = messages.double_to_bytes(temperature)
     bytes_to_send += messages.double_to_bytes(humidity)
