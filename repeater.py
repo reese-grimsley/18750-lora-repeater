@@ -86,7 +86,7 @@ while True:
 
                     now = time.time()
                     timediff = now - timestamp
-                    row = [timestamp, now, message.get_sender_addr(), message.get_dest_addr(), message.get_frame_counter(), humidity, temperature, payload_bytes]
+                    row = [timestamp, now, message.get_sender_addr(), rssi, snr, message.get_dest_addr(), message.get_frame_counter(), humidity, temperature, payload_bytes]
 
                     with open('results.csv', 'a') as f:
                         writer = csv.writer(f)
