@@ -9,9 +9,8 @@ Rak811v2 = rak811v2.Rak811v2
 
 if not os.path.isfile('results.csv'):
     with open('results.csv', 'w') as f:
-        headers = ['TIMESTAMP SEND', 'TIMESTAMP RECEIVE', 'RSSI', 'SNR', 'SENDER ADDRESS', 'DESTINATION ADDRESS', 'FRAME COUNT', 'TEMPERATURE', 'HUMIDITY', 'RAW MESSAGE']
-        writer = csv.writer(f)
-        writer.writerow(list(itertools.chain(*headers)))
+        headers = 'TIMESTAMP_SEND,TIMESTAMP_RECEIVE,RSSI,SNR,SENDER_ADDRESS,DESTINATION_ADDRESS,FRAME_COUNT,TEMPERATURE,HUMIDITY,RAW_MESSAGE\r\n'
+        f.write(headers)
 
 ## Device address
 dev_addr = 0x03 ## Repeater
@@ -87,11 +86,11 @@ while True:
 
                     now = time.time()
                     timediff = now - timestamp
-                    row = [timestamp, now, message.get_sender_addr(), message.get_dest_address(), message.get_frame_counter(), humidity, temperature, payload_bytes]
+                    row = [timestamp, now, message.get_sender_addr(), message.get_dest_addr(), message.get_frame_counter(), humidity, temperature, payload_bytes]
 
                     with open('results.csv', 'a') as f:
                         writer = csv.writer(f)
-                        writer.writerow(list(itertools.chain(*row)))
+                        writer.writerow(row)
 
 
                     print(f'Temperature: {temperature};\thumidity: {humidity};\ttimestamp: {timestamp}')
