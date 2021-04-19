@@ -91,7 +91,7 @@ while True:
     row = [timestamp_send, dev_addr, dest_addr, message.frame_count, temperature, humidity, message.payload_bytes]                
     with open('results.csv','a') as f:
         writer = csv.writer(f)
-        writer.writerow(list(itertools.chain(*row)))
+        writer.writerow(row)
 
 
     print('Sent')
