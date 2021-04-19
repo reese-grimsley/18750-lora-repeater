@@ -1,10 +1,17 @@
 ###There's something wrong with the normal rak811 library for the recently produced set of parts we purchased... supposedly this is an option
 
-import time
+import sys, os, time
 import rak811v2
 import messages
+import csv, itertools
 
 Rak811v2 = rak811v2.Rak811v2
+
+if not os.path.isfile('results.csv'):
+    with open('results.csv', 'w') as f:
+        headers = ['TIMESTAMP SEND', 'TIMESTAMP RECEIVE', 'RSSI', 'SNR', 'SENDER ADDRESS', 'DESTINATION ADDRESS', 'FRAME COUNT', 'TEMPERATURE', 'HUMIDITY', 'RAW MESSAGE']
+        writer = csv.writer(f)
+        writer.writerow(list(itertools.chain(*headers)))
 
 ## Device address
 dev_addr = 0x03 ## Repeater
@@ -72,6 +79,22 @@ while True:
                 message = messages.RXMessage(data)
                 ##Log to CSV, with timestamp, frame_count, dest_addr, sender_address, RSSI, SNR, and the payload bytes
 
+                payload_bytes = message.get_payload_bytes()
+                if len(payload_bytes) >= 24:
+                    temperature = messages.bytes_to_double(payload_bytes[0:8])
+                    humidity = messages.bytes_to_double(payload_bytes[8:16])
+                    timestamp = messages.bytes_to_double(payload_bytes[16:24])
+
+                    now = time.time()
+                    timediff = now - timestamp
+                    row = [timestamp, now, message.get_sender_addr(), message.get_dest_address(), message.get_frame_counter(), humidity, temperature, payload_bytes]
+
+                    with open('results.csv', 'a') as f:
+                        writer = csv.writer(f)
+                        writer.writerow(list(itertools.chain(*row)))
+
+
+                    print(f'Temperature: {temperature};\thumidity: {humidity};\ttimestamp: {timestamp}')
 
                 # only if dev address and dest address in packet matches, else retransmit
                 if message.get_dest_addr() == dev_addr:

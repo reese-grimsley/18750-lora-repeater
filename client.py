@@ -1,10 +1,17 @@
 ###There's something wrong with the normal rak811 library for the recently produced set of parts we purchased... supposedly this is an option
-
+import sys, os, time, itertools, csv
 import messages
-import time
 import rak811v2
+import Adafruit_DHT
 Rak811v2 = rak811v2.Rak811v2
 
+
+
+if not os.path.isfile('results.csv'):
+    with open('results.csv', 'w') as f:
+        headers = ['TIMESTAMP SEND', 'SENDER ADDRESS', 'DESTINATION ADDRESS', 'FRAME COUNT', 'TEMPERATURE', 'HUMIDITY', 'RAW MESSAGE']
+        writer = csv.writer(f)
+        writer.writerow(list(itertools.chain(*headers)))
 
 ## Device address
 dev_addr = 0x02 ## Client
@@ -47,7 +54,8 @@ resp = lora.get_info()
 for x in resp:
     print('\t',x)
 
-
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 18
 #### End of configs
 
 ### Messages to transmit
@@ -61,11 +69,11 @@ while True:
     # str_to_send = "Hello World! msg cnt: %d, time: " % i
     # print('Sending "%s"' % str_to_send)
     # bytes_to_send = messages.str_to_bytes(str_to_send)
-    temperature=73.5 #FIXME
-    humidity=50.0 #FIXME
+    humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+    timestamp_send = time.time()
     bytes_to_send = messages.double_to_bytes(temperature)
     bytes_to_send += messages.double_to_bytes(humidity)
-    bytes_to_send += messages.double_to_bytes(time.time())
+    bytes_to_send += messages.double_to_bytes(timestamp_send)
     # bytes_to_send += messages.str_to_bytes('\r\n')
 
 
@@ -73,8 +81,17 @@ while True:
     message = messages.TXMessage(i, dest_addr, dev_addr, bytes_to_send)
     tx_bytes = message.get_bytes()
 
+    ##TODO: log information into csv as well
+
     # lora.send_lorap2p(str_to_send)
     lora.send_lorap2p(tx_bytes)
+                    
+    row = [timestamp_send, dev_addr, dest_addr, message.frame_count, temperature, humidity, message.payload_bytes]                
+    with open('results.csv','a') as f:
+        writer = csv.writer(f)
+        writer.writerow(list(itertools.chain(*row)))
+
+
     print('Sent')
 
     time.sleep(30)
