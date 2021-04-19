@@ -57,9 +57,9 @@ class RXMessage():
         try:
             self.payload_str = msg_bytes[10:].decode('ascii')
         except UnicodeDecodeError as e: 
-            print(e)
-            print('invalid ASCII bytes; use payload bytes instead')
-            self.payload_str = "INVALID ASCII"
+            # print(e)
+            # print('invalid ASCII bytes; use payload bytes instead')
+            self.payload_str = "INVALID ASCII; USE payload_bytes INSTEAD"
 
 
     def get_payload(self):

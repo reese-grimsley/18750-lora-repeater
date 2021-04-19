@@ -81,11 +81,6 @@ while True:
                     ##Log to CSV, with timestamp, frame_count, dest_addr, client_address, RSSI, SNR, and the payload bytes
                     ## Are we going to detect repeat packets (i.e those received by repeater as well, such that a frame is received >1 times)
 
-                    temperature=73.5 #FIXME
-                    humidity=50.0 #FIXME
-                    bytes_to_send = messages.double_to_bytes(temperature)
-                    bytes_to_send += messages.double_to_bytes(humidity)
-                    bytes_to_send += messages.double_to_bytes(time.time())
 
                     payload_bytes = message.get_payload_bytes()
                     if len(payload_bytes) >= 24:
@@ -93,7 +88,7 @@ while True:
                         humidity = messages.bytes_to_double(payload_bytes[8:16])
                         timestamp = messages.bytes_to_double(payload_bytes[16:24])
 
-                        print(f'Temperature: {temp};\thumitidy: {humidity};\ttimestamp: {timestamp}')
+                        print(f'Temperature: {temp};\humidity: {humidity};\ttimestamp: {timestamp}')
 
 
     except rak811v2.serial.Rak811v2TimeoutError as e:
