@@ -88,7 +88,7 @@ while True:
                         humidity = messages.bytes_to_double(payload_bytes[8:16])
                         timestamp = messages.bytes_to_double(payload_bytes[16:24])
 
-                        print(f'Temperature: {temp};\humidity: {humidity};\ttimestamp: {timestamp}')
+                        print(f'Temperature: {temp};\thumidity: {humidity};\ttimestamp: {timestamp}')
 
 
     except rak811v2.serial.Rak811v2TimeoutError as e:

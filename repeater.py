@@ -92,11 +92,15 @@ while True:
                         print('\t',x)
 
                     # Create message
-                    decoded_data = message.get_payload()
-                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_dest_addr(), message.get_sender_addr(), decoded_data)
+                    received_bytes = message.get_payload_bytes()
+                    message_re = messages.TXMessage(message.get_frame_counter(), message.get_dest_addr(), message.get_sender_addr(), received_bytes)
                     tx_bytes = message_re.get_bytes()   
                     lora.send_lorap2p(tx_bytes)
-                    print('Repeated %s' % decoded_data)  
+                    if message.get_payload() == "INVALID ASCII; USE payload_bytes INSTEAD":
+                        print('Repeated (bytes): %s' % str(message.get_payload_bytes()))
+                    else:
+                        print('Repeated %s' % message.get_payload())  
+                    
 
                     # Set in Rx mode
 

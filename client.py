@@ -66,14 +66,12 @@ while True:
     bytes_to_send = messages.double_to_bytes(temperature)
     bytes_to_send += messages.double_to_bytes(humidity)
     bytes_to_send += messages.double_to_bytes(time.time())
-    print(len(bytes_to_send))
     # bytes_to_send += messages.str_to_bytes('\r\n')
 
 
     # message = messages.TXMessage(i, dest_addr, dev_addr, str_to_send)
     message = messages.TXMessage(i, dest_addr, dev_addr, bytes_to_send)
     tx_bytes = message.get_bytes()
-    print(len(tx_bytes))
 
     # lora.send_lorap2p(str_to_send)
     lora.send_lorap2p(tx_bytes)
