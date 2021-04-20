@@ -96,5 +96,5 @@ while True:
 
     print('Sent')
 
-    time.sleep(30)
+    time.sleep(20)
     i+=1
