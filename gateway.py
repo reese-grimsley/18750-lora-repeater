@@ -43,7 +43,7 @@ for x in resp:
 
 
 print('\nSet P2P parameters')
-lora.set_config('lorap2p:915000000:10:0:1:8:16')
+lora.set_config('lorap2p:915000000:12:0:1:10:20')
 resp = lora.get_info()
 for x in resp:
     print('\t',x)
